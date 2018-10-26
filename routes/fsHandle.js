@@ -112,7 +112,7 @@ function _delete(req, res) {
     var curPath = ___dirname + '/public/upload/' + path;
     var result = {}
     try {
-        if (fs.statSync(curPath)) {
+        if (fs.existsSync(path)) {
             if (fs.statSync(curPath).isDirectory()) { // 删除文件夹
                 deleteFolder(curPath, function () {
                     // console.log(1)

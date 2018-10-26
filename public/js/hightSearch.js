@@ -43,14 +43,44 @@ $(document).ready(function () {
             local_api._list("document", { pid: res.data.id }, "", "id", 1, -1, $.cookie("appkey"), function (all) {
                 console.log(all, "resall")
                 $('#selD').empty()
+                $('#selC').empty()
                 for (var i = 0; i < all.data.length; i++) {
                     var option = `<option value="${all.data[i].tree_path}">${all.data[i].name}</option>`
                     $('#selD').append(option)
                 }
+                // var option = `<option value="1">${1}</option>`
+                // $('#selD').append(option)
+                if (all.data[0]) {
+                    var _pidArr = all.data[0].tree_path.split(',');
+                    var _pid = _pidArr[_pidArr.length - 1]
+                    local_api._list("document", { pid: _pid }, "", "id", 1, -1, $.cookie("appkey"), function (allC) {
+                        console.log(allC, "resall")
+                        for (var i = 0; i < allC.data.length; i++) {
+                            var option = `<option value="${allC.data[i].tree_path}">${allC.data[i].name}</option>`
+                            $('#selC').append(option)
+                        }
+
+                    })
+                }
+
             })
 
         })
     }
+    $('#selD').change(function (e) {
+        // console.log(e.target.value)
+        var _pidArr = e.target.value.split(',');
+        var _pid = _pidArr[_pidArr.length - 1]
+        local_api._list("document", { pid: _pid }, "", "id", 1, -1, $.cookie("appkey"), function (allC) {
+            console.log(allC, "resall")
+            $('#selC').empty()
+            for (var i = 0; i < allC.data.length; i++) {
+                var option = `<option value="${allC.data[i].tree_path}">${allC.data[i].name}</option>`
+                $('#selC').append(option)
+            }
+
+        })
+    })
 
 
     var docColumns = [];
@@ -101,7 +131,7 @@ $(document).ready(function () {
             type: 2
         }
 
-       
+
 
         if (name || keyword) {
             obj['name'] = '^' + (name || keyword)
@@ -122,8 +152,8 @@ $(document).ready(function () {
             }
 
             var obj = { type: 3, ispass: 1 }
-            if($('#selD').val() != ''){
-                obj["tree_path"] ='^'+ $('#selD').val()
+            if ($('#selC').val() != '') {
+                obj["tree_path"] = '^' + $('#selC').val()
             }
             if (res.data.length) {
                 obj['pid'] = str.join('|')

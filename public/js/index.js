@@ -14,8 +14,8 @@ var pid = 0;
 var contentfileId = $.cookie('contentId');
 var moveItem = [];
 var movetoTarget = null;
-var docDatas;
-var sortString = '-type|createdAt|did|name|id';
+var docDatas = [];
+var sortString = '-type|name|id';
 // $('#divDocSort').hide()
 // $('#divCombind').hide()
 _readyFun();
@@ -744,7 +744,7 @@ function _readyFun() {
     local_api._list('document', {
       type: '0|1|2|4',
       u_path: $.cookie('tree_path') + '|' + '^' + $.cookie('tree_path') + ','
-    }, '', sortString, 1, -1, $.cookie('appkey'), function (res) {
+    }, '', 'createdAt', 1, -1, $.cookie('appkey'), function (res) {
       if (res.status == 0) {
         if (res.total) {
           datas = res.data;
@@ -1520,16 +1520,16 @@ function _readyFun() {
   });
   var tree_address = '';
   var wlb = {
-    '01': '履历材料',
-    '02': '自传材料',
-    '03': '鉴定、考核、考察、审计材料',
-    '04': '学历、学位、专业技术和培训等材料',
-    '05': '政审材料',
-    '06': '参加党团的材料',
-    '07': '表彰奖励材料',
-    '08': '涉纪涉法处分材料',
-    '09': '工资、任免、出国、代表大会等材料',
-    '10': '其他供参考材料'
+    '01': '01_履历材料',
+    '02': '02_自传材料',
+    '03': '03_鉴定、考核、考察、审计材料',
+    '04': '04_学历、学位、专业技术和培训等材料',
+    '05': '05_政审材料',
+    '06': '06_参加党团的材料',
+    '07': '07_表彰奖励材料',
+    '08': '08_涉纪涉法处分材料',
+    '09': '09_工资、任免、出国、代表大会等材料',
+    '10': '10_其他供参考材料'
   }
   function uploadFiles() {
     createOperate('文件上传');

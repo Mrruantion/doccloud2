@@ -14,6 +14,9 @@ $(document).ready(function () {
         if($('#isjz').is(':checked')){
             localStorage.setItem("account",account)
             localStorage.setItem("password",password)
+        }else {
+            localStorage.setItem("account",'')
+            localStorage.setItem("password",'')
         }
         if (account == '') {
             return;
